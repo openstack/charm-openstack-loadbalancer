@@ -1,0 +1,18 @@
+# Copyright 2021 Canonical
+# See LICENSE file for licensing details.
+name: openstack-loadbalancer
+display-name: OpenStack loadbalancer
+maintainer: OpenStack Charmers <openstack-discuss@lists.openstack.org>
+summary: Loadbalance traffic over OpenStack services
+description: |
+  Loadbalance the things
+tags:
+- openstack
+extra-bindings:
+  public:
+series:
+- focal
+- groovy
+provides:
+  loadbalancer:
+    interface: api-endpoints
