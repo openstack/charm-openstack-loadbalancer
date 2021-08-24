@@ -1,2 +1,3 @@
 ops >= 1.2.0
 git+https://opendev.org/openstack/charm-ops-openstack#egg=ops_openstack
+git+https://github.com/gnuoy/charm-interface-hacluster@ops-framework-support#egg=interface_hacluster

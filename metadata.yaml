@@ -16,3 +16,7 @@ series:
 provides:
   loadbalancer:
     interface: api-endpoints
+requires:
+  ha:
+    interface: hacluster
+    scope: container

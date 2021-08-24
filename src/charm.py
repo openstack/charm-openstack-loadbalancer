@@ -16,6 +16,7 @@ import jinja2
 import json
 import logging
 import interface_api_endpoints
+import interface_hacluster.ops_ha_interface as ops_ha_interface
 import subprocess
 
 from ops.charm import CharmBase
@@ -87,7 +88,9 @@ class OpenstackLoadbalancerCharm(ops_openstack.core.OSBaseCharm):
     def __init__(self, *args):
         super().__init__(*args)
         self.api_eps = interface_api_endpoints.APIEndpointsProvides(self)
+        self.ha = ops_ha_interface.HAServiceRequires(self, 'ha')
         self.framework.observe(self.api_eps.on.ep_ready, self._configure_haproxy)
+        self.framework.observe(self.ha.on.ha_ready, self._configure_hacluster)
         self.unit.status = ActiveStatus()
 
     def _get_config_from_relation(self):
@@ -125,6 +128,12 @@ class OpenstackLoadbalancerCharm(ops_openstack.core.OSBaseCharm):
         ctxt.update(self._get_config_from_relation())
         ctxt = {k.replace('-', '_'): v for k, v in ctxt.items()}
         return jinja_template.render(**ctxt)
+
+    def _configure_hacluster(self, event):
+        for vip in self.config.get('vip').split():
+            self.ha.add_vip(self.model.app.name, vip)
+        self.ha.add_init_service(self.model.app.name, 'haproxy')
+        self.ha.bind_resources()
 
     def _configure_haproxy(self, event):
         with open('/etc/haproxy/haproxy.cfg', 'w') as f:
