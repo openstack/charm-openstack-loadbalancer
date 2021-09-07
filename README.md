@@ -1,25 +1,26 @@
-# openstack-loadbalancer
+# Overview
 
-## Description
+The openstack-loadbalancer charm deploys a loadbalancer that can load balance
+traffic over a number of units of a service. The charm supports using vips
+accross the loadbalancer units to provide HA.
 
-TODO: Describe your charm in a few paragraphs of Markdown
+# Usage
 
-## Usage
+## Configuration
 
-TODO: Provide high-level usage, such as required config or relations
+See file `config.yaml` for the full list of options, along with their
+descriptions and default values.
 
+## Deployment
 
-## Developing
+Use the vip charm config option to specify the vips to be used by the
+loadbalancer, normally one vip per network space that the charm is bound to.
 
-Create and activate a virtualenv with the development requirements:
+    juju deploy -n 3 openstack-loadbalancer
+    juju config openstack-loadbalancer vip="10.0.0.100 10.10.0.100 10.20.0.100"
+    juju deploy hacluster
+    juju relate openstack-loadbalancer:ha hacluster:ha
 
-    virtualenv -p python3 venv
-    source venv/bin/activate
-    pip install -r requirements-dev.txt
+Then relate the charm to a service that requires a loadbalancer
 
-## Testing
-
-The Python operator framework includes a very nice harness for testing
-operator behaviour without full deployment. Just `run_tests`:
-
-    ./run_tests
+    juju add-relation openstack-loadbalancer:loadbalancer ceph-dashboard:loadbalancer
