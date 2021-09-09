@@ -7,7 +7,7 @@
 import ipaddress
 import logging
 import os
-import interface_api_endpoints
+import interface_openstack_loadbalancer.loadbalancer as ops_lb_interface
 import interface_hacluster.ops_ha_interface as ops_ha_interface
 import subprocess
 from pathlib import Path
@@ -76,12 +76,14 @@ class OpenstackLoadbalancerCharm(ops_openstack.core.OSBaseCharm):
     def __init__(self, *args):
         """Setup interfaces and observers"""
         super().__init__(*args)
-        self.api_eps = interface_api_endpoints.APIEndpointsProvides(self)
+        self.api_eps = ops_lb_interface.OSLoadbalancerProvides(
+            self,
+            'loadbalancer')
         self.adapters = OpenstackLoadbalancerAdapters((self.api_eps,), self)
         self.ha = ops_ha_interface.HAServiceRequires(self, 'ha')
         self.framework.observe(
-            self.api_eps.on.ep_requested,
-            self._process_ep_requests)
+            self.api_eps.on.lb_requested,
+            self._process_lb_requests)
         self.framework.observe(self.ha.on.ha_ready, self._configure_hacluster)
         self.unit.status = ActiveStatus()
         self._stored.is_started = True
@@ -143,7 +145,7 @@ class OpenstackLoadbalancerCharm(ops_openstack.core.OSBaseCharm):
         logging.info("Rendering config")
         _render_configs()
 
-    def _process_ep_requests(self, event):
+    def _process_lb_requests(self, event):
         self._configure_haproxy()
         self._send_loadbalancer_response()
 
