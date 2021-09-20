@@ -1,0 +1,29 @@
+- project:
+    templates:
+      - charm-unit-jobs
+    check:
+      jobs:
+      - openstack-loadbalancer-focal
+      - openstack-loadbalancer-hirsute
+    vars:
+      needs_charm_build: true
+      charm_build_name: openstack-loadbalancer
+      build_type: charmcraft
+- job:
+    name: openstack-loadbalancer-focal
+    parent: func-target
+    dependencies:
+      - osci-lint
+      - tox-py35
+      - tox-py36
+      - tox-py37
+      - tox-py38
+    vars:
+      tox_extra_args: focal
+- job:
+    name: openstack-loadbalancer-hirsute
+    parent: func-target
+    dependencies: &smoke-jobs
+      - openstack-loadbalancer-focal
+    vars:
+      tox_extra_args: hirsute

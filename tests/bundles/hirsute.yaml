@@ -1,5 +1,5 @@
 local_overlay_enabled: False
-series: focal
+series: hirsute
 applications:
   ceph-osd:
     charm: cs:~openstack-charmers-next/ceph-osd

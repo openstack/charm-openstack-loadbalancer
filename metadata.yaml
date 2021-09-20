@@ -14,7 +14,7 @@ extra-bindings:
   internal:
 series:
 - focal
-- groovy
+- hirsute
 provides:
   loadbalancer:
     interface: openstack-loadbalancer
