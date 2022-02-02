@@ -14,3 +14,6 @@ target_deploy_status:
   vault:
     workload-status: blocked
     workload-status-message-prefix: Vault needs to be initialized
+tests_options:
+  force_deploy:
+    - hirsute
