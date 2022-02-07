@@ -1,7 +1,6 @@
 charm_name: openstack-loadbalancer
 gate_bundles:
   - focal
-  - hirsute
 smoke_bundles:
   - focal
 configure:

@@ -2,37 +2,44 @@ local_overlay_enabled: False
 series: focal
 applications:
   ceph-osd:
-    charm: cs:~openstack-charmers-next/ceph-osd
+    charm: ch:ceph-osd
     num_units: 6
     storage:
       osd-devices: 'cinder,10G'
     options:
       osd-devices: '/dev/test-non-existent'
+    channel: latest/edge
   ceph-mon:
-    charm: cs:~openstack-charmers-next/ceph-mon
+    charm: ch:ceph-mon
     num_units: 3
     options:
       monitor-count: '3'
+    channel: latest/edge
   vault:
     num_units: 1
-    charm: cs:~openstack-charmers-next/vault
+    charm: ch:vault
+    channel: latest/edge
   mysql-innodb-cluster:
-    charm: cs:~openstack-charmers-next/mysql-innodb-cluster
+    charm: ch:mysql-innodb-cluster
     constraints: mem=3072M
     num_units: 3
+    channel: latest/edge
   vault-mysql-router:
-    charm: cs:~openstack-charmers-next/mysql-router
+    charm: ch:mysql-router
+    channel: latest/edge
   ceph-dashboard:
-    charm: cs:~openstack-charmers-next/ceph-dashboard
+    charm: ch:ceph-dashboard
     options:
       public-hostname: 'ceph-dashboard.zaza.local'
+    channel: latest/edge
   openstack-loadbalancer:
     charm: ../../openstack-loadbalancer.charm
     num_units: 3
   hacluster:
-    charm: cs:~openstack-charmers-next/hacluster
+    charm: ch:hacluster
     options:
       cluster_count: 3
+    channel: latest/edge
 relations:
   - - 'ceph-osd:mon'
     - 'ceph-mon:osd'
