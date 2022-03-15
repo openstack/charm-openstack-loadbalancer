@@ -14,7 +14,6 @@ extra-bindings:
   internal:
 series:
 - focal
-- hirsute
 provides:
   loadbalancer:
     interface: openstack-loadbalancer
