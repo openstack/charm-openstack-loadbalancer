@@ -14,7 +14,7 @@ extra-bindings:
   internal:
 series:
 - focal
-- hirsute
+- jammy
 provides:
   loadbalancer:
     interface: openstack-loadbalancer
