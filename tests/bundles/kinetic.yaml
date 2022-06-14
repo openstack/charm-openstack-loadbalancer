@@ -1,5 +1,5 @@
 local_overlay_enabled: False
-series: focal
+series: kinetic
 applications:
   ceph-osd:
     charm: ch:ceph-osd

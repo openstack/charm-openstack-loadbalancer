@@ -8,13 +8,13 @@ description: |
   Loadbalance the things
 tags:
 - openstack
+series:
+- jammy
+- kinetic
 extra-bindings:
   public:
   admin:
   internal:
-series:
-- focal
-- jammy
 provides:
   loadbalancer:
     interface: openstack-loadbalancer
