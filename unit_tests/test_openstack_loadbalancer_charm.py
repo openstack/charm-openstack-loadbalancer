@@ -16,6 +16,7 @@
 
 import ipaddress
 import json
+import os
 import re
 import sys
 import unittest
@@ -25,7 +26,9 @@ sys.path.append('src')  # noqa
 
 from mock import patch
 
-from ops.testing import Harness, _TestingModelBackend
+from ops._private.harness import _TestingModelBackend
+from ops.jujucontext import _JujuContext
+from ops.testing import Harness
 from ops import framework, model
 import charm
 from unit_tests.manage_test_relations import (
@@ -72,6 +75,8 @@ class TestOpenstackLoadbalancerCharmBase(CharmTestCase):
 
     def get_harness(self):
         initial_config = {}
+        # dummy juju version
+        os.environ["JUJU_VERSION"] = "0.0.0"
         _harness = Harness(
             _OpenstackLoadbalancerCharm,
             meta='''
@@ -122,7 +127,10 @@ requires:
                 return network_data[endpoint_name]
 
         _harness._backend = _TestingOPSModelBackend(
-            _harness._unit_name, _harness._meta)
+            _harness._unit_name,
+            _harness._meta,
+            _harness._get_config(None),
+            _JujuContext.from_dict(os.environ),)
         _harness._model = model.Model(
             _harness._meta,
             _harness._backend)

@@ -149,5 +149,6 @@ class OpenstackLoadbalancerCharm(ops_openstack.core.OSBaseCharm):
         self._configure_haproxy()
         self._send_loadbalancer_response()
 
+
 if __name__ == "__main__":
     main(OpenstackLoadbalancerCharm)
