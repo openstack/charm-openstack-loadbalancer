@@ -4,8 +4,6 @@
     check:
       jobs:
       - openstack-loadbalancer-jammy
-      - openstack-loadbalancer-kinetic:
-            voting: false
     vars:
       needs_charm_build: true
       charm_build_name: openstack-loadbalancer
@@ -21,13 +19,3 @@
         soft: true
     vars:
       tox_extra_args: jammy
-- job:
-    name: openstack-loadbalancer-kinetic
-    parent: func-target
-    dependencies:
-      - charm-build
-      - osci-lint
-      - name: tox-py310
-        soft: true
-    vars:
-      tox_extra_args: kinetic
