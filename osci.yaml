@@ -1,14 +1,16 @@
 - project:
     templates:
       - charm-unit-jobs-py310
+      - charm-unit-jobs-py312
     check:
       jobs:
       - openstack-loadbalancer-jammy
+      - openstack-loadbalancer-noble
     vars:
       needs_charm_build: true
       charm_build_name: openstack-loadbalancer
       build_type: charmcraft
-      charmcraft_channel: 2.0/stable
+      charmcraft_channel: 3.x/stable
 - job:
     name: openstack-loadbalancer-jammy
     parent: func-target
@@ -19,3 +21,13 @@
         soft: true
     vars:
       tox_extra_args: jammy
+- job:
+    name: openstack-loadbalancer-noble
+    parent: func-target
+    dependencies:
+      - charm-build
+      - osci-lint
+      - name: tox-py312
+        soft: true
+    vars:
+      tox_extra_args: noble

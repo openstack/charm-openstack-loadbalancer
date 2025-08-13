@@ -33,7 +33,7 @@ applications:
       public-hostname: 'ceph-dashboard.zaza.local'
     channel: latest/edge
   openstack-loadbalancer:
-    charm: ../../openstack-loadbalancer.charm
+    charm: ../../openstack-loadbalancer_ubuntu@22.04-amd64.charm
     num_units: 3
   hacluster:
     charm: ch:hacluster

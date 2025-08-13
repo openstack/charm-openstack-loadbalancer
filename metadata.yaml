@@ -10,6 +10,7 @@ tags:
 - openstack
 series:
 - jammy
+- noble
 extra-bindings:
   public:
   admin:
