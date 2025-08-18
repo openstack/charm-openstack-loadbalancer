@@ -8,13 +8,13 @@ applications:
       osd-devices: 'cinder,10G'
     options:
       osd-devices: '/dev/test-non-existent'
-    channel: latest/edge
+    channel: squid/edge
   ceph-mon:
     charm: ch:ceph-mon
     num_units: 3
     options:
       monitor-count: '3'
-    channel: latest/edge
+    channel: squid/edge
   vault:
     num_units: 1
     charm: ch:vault
@@ -31,7 +31,7 @@ applications:
     charm: ch:ceph-dashboard
     options:
       public-hostname: 'ceph-dashboard.zaza.local'
-    channel: latest/edge
+    channel: squid/edge
   openstack-loadbalancer:
     charm: ../../openstack-loadbalancer_ubuntu@24.04-amd64.charm
     num_units: 3
